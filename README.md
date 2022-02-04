@@ -1,4 +1,7 @@
 # Tienda
+Aplicación CRUD de una tienda en Angular.
+Este proyecto fue creado con Angular CLI en la versión 13.2.1.
+Antes de instalar las dependecias se necesita descargar e instalar `Node.js` LTS
 
 Pasos para iniciar el proyecto:
 1. Clonar repositorio
