@@ -6,12 +6,12 @@ Pasos para iniciar el proyecto:
 3. Dirigirse a la ruta de la clonación del repositorio con el comando `cd G:\Ruta del repositorio\Angular-Crud-Tienda`
 4. Instalar las dependencias con el comando `npm install`
 
-##Ejecute el backend
+## Ejecute el backend
 1. Abrir una nueva consola con cmd
 2. Dirigirse a la ruta de la clonación del repositorio con el comando `cd G:\Ruta del repositorio\Angular-Crud-Tienda`
 3. Ejecutar la API local con el comando `npm run serverApi`
 
-##Front-end
+## Front-end
 1. Desde otra consola con cmd
 2. Dirigirse a la ruta de la clonación del repositorio con el comando `cd G:\Ruta del repositorio\Angular-Crud-Tienda`
 3. Ejecutar el comando `ng serve`
