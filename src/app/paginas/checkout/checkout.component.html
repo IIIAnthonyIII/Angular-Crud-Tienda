@@ -1,0 +1,61 @@
+<div class="container">
+    <form class="form item">
+        <mat-form-field class="form_element"> <!-- Se importa en checkout.module.ts y material.module.ts -->
+            <input
+                matInput 
+                placeholder="Nombre" 
+                required 
+                [(ngModel)]="modelo.nombre" 
+                name = "name" 
+                #name = "ngModel"
+            > <!-- El modelo se crea en checkout.component.ts -->
+            <mat-error *ngIf="!name.valid || name.pristine"> <!-- Pristine si es que ha introducido algo -->
+                El nombre es requerido
+            </mat-error>
+        </mat-form-field>
+        <mat-radio-group class="form_element"> <!-- Se importa en material.module.ts -->
+            <p>Escoja una opción: </p>
+            <mat-radio-button value="recogida" (change)="recogidaEntrega(false)"> <!-- Metodo creado en checkout.component.ts -->
+                Recogida
+            </mat-radio-button>
+            <mat-radio-button value="entrega" (change)="recogidaEntrega(true)">
+                Entrega
+            </mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field class="form_element">
+            <input
+                matInput 
+                placeholder="Dirección" 
+                [(ngModel)]="modelo.direccion" 
+                name="shippingAddress"
+                #shippingAddress="ngModel"
+            >
+        </mat-form-field>
+        <mat-form-field class="form_element">
+            <input
+                matInput 
+                placeholder="Ciudad" 
+                [(ngModel)]="modelo.ciudad" 
+                name="city"
+                #city="ngModel"
+            >
+        </mat-form-field>
+        <mat-form-field class="form_element">
+            <mat-label>Seleccionar</mat-label>
+            <mat-select
+            [(ngModel)]="modelo.tienda"
+            name="store"
+            #store="ngModel">
+                <mat-option [value]="tiendas" *ngFor="let tiendas of stores"> <!-- Se importa en material.module.ts -->
+                    {{ tiendas.name }} - {{tiendas.openingHours }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</div>
+
+<div class="container_button">
+    <button [disabled]="" mat-raised-button color="primary" type="submit">
+        Checkout
+    </button>
+</div>

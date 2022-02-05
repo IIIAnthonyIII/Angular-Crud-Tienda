@@ -6,6 +6,7 @@ const routes: Routes = [
     path: 'productos', 
     loadChildren: () => import('./paginas/productos/productos.module').then(m => m.ProductosModule) 
   }, //Para usarlo se debe importar en app.module.ts y viene de miTienda.component.ts
+  { path: 'checkout', loadChildren: () => import('./paginas/checkout/checkout.module').then(m => m.CheckoutModule) }, 
   
   { path: '**', redirectTo:'', pathMatch:'full' }, //Para redigir a pagina principal en caso de que no exista ruta, debe ser último porque las rutas se revisan por orden, Estado 404
 ];

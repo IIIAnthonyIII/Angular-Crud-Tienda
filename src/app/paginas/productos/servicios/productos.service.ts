@@ -9,7 +9,7 @@ import { ProductoInterface } from '../interface/producto.interface';
 
 //Llamada a API
 export class ProductosService {
-  private apiURL = "http://localhost:3000/products"; //Cualquier API, este caso viene de la carpeta server que es API local 
+  private apiURL = "http://localhost:3000/products"; /*Cualquier API, este caso viene de la carpeta server que es API local*/
   constructor(private http: HttpClient) { }
 
   obtenerProductos(): Observable<ProductoInterface[]>{ //Aqui se usa producto.interface.ts, es Observable ya que se va a utilizar un flujo de datos en el tiempo por la respuesta de la API, parecido a "Promise"
