@@ -1,1 +1,18 @@
-<p>producto works!</p>
+<!-- El productoHijo viene de producto.component.ts -->
+<mat-card class="card"> <!-- Para usar esta etiqueta se debe importar a material.module.ts y en productos.module.ts-->
+    <mat-card-header> 
+        <mat-card-title>
+            {{productoHijo.name}} 
+        </mat-card-title> 
+    </mat-card-header>
+    
+    <mat-card-content> {{ productoHijo.description }} </mat-card-content>
+    
+    <mat-card-actions>
+        <!-- Evento onClick creado en producto.component.ts -->
+        <button mat-flat-button color="primary" (click)="onClick()"> <!-- Para que le de color se debe importar en material.module.ts -->
+            Comprar {{productoHijo.price | currency}} <!-- Con currency le pone el signo de dólar -->
+            <mat-icon>add_shopping_cart</mat-icon> <!-- Para que funcione el icono se debe importar en material.module.ts -->
+        </button>
+    </mat-card-actions>
+</mat-card>
