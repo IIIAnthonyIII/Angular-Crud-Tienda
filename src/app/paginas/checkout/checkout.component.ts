@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { tap } from 'rxjs/operators';
+import { DataServicio } from 'src/app/compartido/servicios/data.service';
+import { TiendaInterface } from "../../compartido/interfaces/tiendas.interface";
 
 @Component({
   selector: 'app-checkout',
@@ -12,29 +15,26 @@ export class CheckoutComponent implements OnInit {
     direccion: "",
     ciudad:"",
   }
-  stores=[
-    {
-      "id": 1,
-      "name": "Park Row at Beekman St",
-      "address": "38 Park Row",
-      "city": "New York",
-      "openingHours": "10:00 - 14:00 and 17:00 - 20:30"
-    },
-    {
-      "id": 2,
-      "name": "Store Alcalá",
-      "address": "Calle de Alcalá, 21",
-      "city": "Madrid",
-      "openingHours": "10:00 - 14:00 and 17:00 - 20:30"
-    },
-  ]
+  stores: TiendaInterface[] = [];
 
-  constructor() { }
+  constructor(private dataSvc: DataServicio) { }
 
   ngOnInit(): void {
+    this.obtenerTiendas();
   }
 
   recogidaEntrega(value: boolean): void {
     console.log(value);
+  }
+
+  onSubmit():void{
+    console.log("Guardar");
+  }
+
+  obtenerTiendas():void{
+    this.dataSvc.obtenerTiendas()
+    .pipe(
+      tap((tiendas:TiendaInterface[]) => this.stores = tiendas)
+    ).subscribe();
   }
 }

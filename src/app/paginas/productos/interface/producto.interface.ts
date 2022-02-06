@@ -6,4 +6,5 @@ export interface ProductoInterface{
     description: string;
     categoryId: number;
     stock: number;
+    quantity: number;
 }

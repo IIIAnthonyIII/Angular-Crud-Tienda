@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+  { path: '', redirectTo:'/productos', pathMatch:'full' }, //Se redirige si está vacio a la pagina productos
   { 
     path: 'productos', 
     loadChildren: () => import('./paginas/productos/productos.module').then(m => m.ProductosModule) 
