@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs/operators';
 import { DetallesInterface, PedidoInterface } from 'src/app/compartido/interfaces/pedido.interface';
 import { DataServicio } from 'src/app/compartido/servicios/data.service';
@@ -19,14 +20,20 @@ export class CheckoutComponent implements OnInit {
     direccion: "",
     ciudad:"",
   }
-  esEntrega = false;
+  esEntrega = true;
   carrito: ProductoInterface[] = [];
   stores: TiendaInterface[] = [];
 
-  constructor(private dataSvc: DataServicio, private shoppingCartSvc: ShoppingCartServicio) { }
+  constructor(
+    private dataSvc: DataServicio, 
+    private shoppingCartSvc: ShoppingCartServicio,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.obtenerTiendas();
+    this.obtenerDataCarrito();
+    this.prepararDetalles();
   }
 
   recogidaEntrega(value: boolean): void {
@@ -42,11 +49,12 @@ export class CheckoutComponent implements OnInit {
     }
     this.dataSvc.guardarPedido(data).pipe(
       tap(res=>console.log('Pedido -> ', res)),
-      switchMap((pedido)=>{
-        const detalles = {};
-        return this.dataSvc.guardarDetallesPedido(detalles);
-      }),
-      tap(res=>console.log('Finish -> ', res)),
+      switchMap(({id: orderId})=>{
+        //const orderId = order.id;
+        const details = this.prepararDetalles();
+        return this.dataSvc.guardarDetallesPedido({details, orderId});
+      }),//Nombre de las variables que proviene de DetallesPedidoInterface
+      tap(() => this.router.navigate(['/pagina-gracias'])),
     ).subscribe();
   }
 
@@ -63,6 +71,10 @@ export class CheckoutComponent implements OnInit {
 
   private prepararDetalles(): DetallesInterface[] {
     const detalles: DetallesInterface[] = [];
+    this.carrito.forEach((producto: ProductoInterface) =>{
+      const {id: productId, name: productName, quantity} = producto; //Estos nombres son de producto.interface.ts
+      detalles.push({productId, productName, quantity}); //Estos nombres son de pedido.interface.ts
+    })
     return detalles;
   }
 
