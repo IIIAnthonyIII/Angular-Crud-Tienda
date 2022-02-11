@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { switchMap, tap } from 'rxjs/operators';
+import { delay, switchMap, tap } from 'rxjs/operators';
 import { DetallesInterface, PedidoInterface } from 'src/app/compartido/interfaces/pedido.interface';
 import { DataServicio } from 'src/app/compartido/servicios/data.service';
 import { ShoppingCartServicio } from 'src/app/compartido/servicios/shopping-cart.service';
 import { TiendaInterface } from "../../compartido/interfaces/tiendas.interface";
 import { ProductoInterface } from '../productos/interface/producto.interface';
+import { ProductosService } from '../productos/servicios/productos.service';
 
 @Component({
   selector: 'app-checkout',
@@ -27,8 +28,11 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private dataSvc: DataServicio, 
     private shoppingCartSvc: ShoppingCartServicio,
-    private router: Router
-  ) { }
+    private router: Router,
+    private productoSvc: ProductosService,
+  ) { 
+    this.verificarCarritoVacio();
+  }
 
   ngOnInit(): void {
     this.obtenerTiendas();
@@ -45,7 +49,7 @@ export class CheckoutComponent implements OnInit {
     const data: PedidoInterface = {
       ...formData,
       date: this.obtenerFechaActual(),
-      pickup: this.esEntrega
+      isDelivery: this.esEntrega,
     }
     this.dataSvc.guardarPedido(data).pipe(
       tap(res=>console.log('Pedido -> ', res)),
@@ -54,7 +58,9 @@ export class CheckoutComponent implements OnInit {
         const details = this.prepararDetalles();
         return this.dataSvc.guardarDetallesPedido({details, orderId});
       }),//Nombre de las variables que proviene de DetallesPedidoInterface
-      tap(() => this.router.navigate(['/pagina-gracias'])),
+      tap(() => this.router.navigate(['/checkout/pagina-gracias'])),
+      delay(4000),//Tiempo en milisegundos para que se ejecute algo
+      tap(() => this.shoppingCartSvc.resetearCarrito()),
     ).subscribe();
   }
 
@@ -72,8 +78,12 @@ export class CheckoutComponent implements OnInit {
   private prepararDetalles(): DetallesInterface[] {
     const detalles: DetallesInterface[] = [];
     this.carrito.forEach((producto: ProductoInterface) =>{
-      const {id: productId, name: productName, quantity} = producto; //Estos nombres son de producto.interface.ts
-      detalles.push({productId, productName, quantity}); //Estos nombres son de pedido.interface.ts
+      const {id: productId, name: productName, quantity, stock} = producto; //Estos nombres son de producto.interface.ts
+      const updatedStock = (stock - quantity);
+
+      this.productoSvc.updatedStockProdServ(productId, updatedStock).pipe(
+        tap(res => detalles.push({productId, productName, quantity}))
+      ).subscribe();  //Estos nombres son de pedido.interface.ts
     })
     return detalles;
   }
@@ -82,5 +92,15 @@ export class CheckoutComponent implements OnInit {
     this.shoppingCartSvc.cartAccion$.pipe(
       tap((productos: ProductoInterface[])=>this.carrito = productos)
     ).subscribe();
+  }
+
+  private verificarCarritoVacio(): void{
+    this.shoppingCartSvc.cartAccion$.pipe(
+      tap((productos: ProductoInterface[]) => {
+        if(Array.isArray(productos) && !productos.length){
+          this.router.navigate(['/productos']);
+        }
+      })
+      ).subscribe();
   }
 }

@@ -56,4 +56,11 @@ export class ShoppingCartServicio {
         this.cantidadProductos();
         this.calcularTotal();
     }
+
+    resetearCarrito(): void {
+        this.cartSubject.next([]);
+        this.totalSubject.next(0);
+        this.cantidadSubject.next(0);
+        this.productoServicio = [];
+    }
 }

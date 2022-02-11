@@ -5,7 +5,7 @@ import { ShoppingCartServicio } from "../../servicios/shopping-cart.service";
     selector: 'app-cart',
     template: `
         <ng-container *ngIf="{ total: total$ | async, cantidad: cantidad$ | async } as dataCart">
-            <ng-container *ngIf="dataCart.total != null">
+            <ng-container *ngIf="dataCart.total != 0">
                 <mat-icon>add_shopping_cart</mat-icon>
                 {{dataCart.total | currency}}
                 ({{dataCart.cantidad}})
@@ -17,7 +17,6 @@ import { ShoppingCartServicio } from "../../servicios/shopping-cart.service";
 export class CartComponente {
     cantidad$ = this.shoppingCartSvc.cantidadAccion$;
     total$ = this.shoppingCartSvc.totalAccion$;
-    cart$ = this.shoppingCartSvc.cartAccion$;
 
-    constructor(private shoppingCartSvc: ShoppingCartServicio){}
+    constructor(private shoppingCartSvc: ShoppingCartServicio) {}
 }

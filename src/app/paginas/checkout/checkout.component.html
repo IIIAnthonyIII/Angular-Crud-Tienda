@@ -13,13 +13,12 @@
                 El nombre es requerido
             </mat-error>
         </mat-form-field>
-        {{esEntrega}} - isDelivery?
         <mat-radio-group class="form_element"> <!-- Se importa en material.module.ts -->
             <p>Escoja una opción: </p>
-            <mat-radio-button value="recogida" (change)="recogidaEntrega(false)" checked> <!-- Metodo creado en checkout.component.ts -->
+            <mat-radio-button value="recogida" (change)="recogidaEntrega(false)"> <!-- Metodo creado en checkout.component.ts -->
                 Recogida
             </mat-radio-button>
-            <mat-radio-button value="entrega" (change)="recogidaEntrega(true)">
+            <mat-radio-button value="entrega" (change)="recogidaEntrega(true)" checked>
                 Entrega
             </mat-radio-button>
         </mat-radio-group>

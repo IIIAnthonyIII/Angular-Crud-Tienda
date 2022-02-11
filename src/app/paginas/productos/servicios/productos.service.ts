@@ -15,4 +15,9 @@ export class ProductosService {
   obtenerProductos(): Observable<ProductoInterface[]>{ //Aqui se usa producto.interface.ts, es Observable ya que se va a utilizar un flujo de datos en el tiempo por la respuesta de la API, parecido a "Promise"
     return this.http.get<ProductoInterface[]>(this.apiURL); //Petición a la API, devuelve un arreglo
   }
+
+  updatedStockProdServ(productId: number, stock:number): Observable<any> {
+    const body = {"stock": stock}
+    return this.http.patch<any>(`${this.apiURL}/${productId}`, body)
+  }
 }
