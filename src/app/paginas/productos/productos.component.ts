@@ -3,8 +3,8 @@
 import { Component, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { ProductoInterface } from './interface/producto.interface';
-import { ShoppingCartServicio } from 'src/app/compartido/servicios/shopping-cart.service';
-import { ProductosService } from './servicios/productos.service';
+import { ShoppingCartServicio } from 'src/app/compartido/service/shopping-cart.service';
+import { ProductosService } from '../../compartido/service/productos.service';
 
 @Component({
   selector: 'app-productos',

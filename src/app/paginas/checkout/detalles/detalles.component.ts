@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ShoppingCartServicio } from 'src/app/compartido/servicios/shopping-cart.service';
+import { ShoppingCartServicio } from 'src/app/compartido/service/shopping-cart.service';
 
 @Component({
   selector: 'app-detalles',

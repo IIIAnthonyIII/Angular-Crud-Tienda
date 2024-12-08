@@ -3,13 +3,14 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { DetallesPedidoInterface, PedidoInterface } from "../interfaces/pedido.interface";
 import { TiendaInterface } from "../interfaces/tiendas.interface";
+import { apiConfig } from "src/app/config/config";
 
 @Injectable({
     providedIn: 'root',
 })
 
 export class DataServicio{
-    private apiURL = 'http://localhost:3000';
+    private apiURL = apiConfig.uriApi;
 
     constructor(private http: HttpClient){}
 

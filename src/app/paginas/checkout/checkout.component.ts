@@ -3,11 +3,11 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { delay, switchMap, tap } from 'rxjs/operators';
 import { DetallesInterface, PedidoInterface } from 'src/app/compartido/interfaces/pedido.interface';
-import { DataServicio } from 'src/app/compartido/servicios/data.service';
-import { ShoppingCartServicio } from 'src/app/compartido/servicios/shopping-cart.service';
+import { DataServicio } from 'src/app/compartido/service/data.service';
+import { ShoppingCartServicio } from 'src/app/compartido/service/shopping-cart.service';
 import { TiendaInterface } from "../../compartido/interfaces/tiendas.interface";
 import { ProductoInterface } from '../productos/interface/producto.interface';
-import { ProductosService } from '../productos/servicios/productos.service';
+import { ProductosService } from '../../compartido/service/productos.service';
 
 @Component({
   selector: 'app-checkout',
